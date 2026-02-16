@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    <style>
+        body{
+            margin:0;
+            font-family: Arial;
+            background:#f0f2f5;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .card{
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            width:400px;
+            height:470px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            color:#0f766e;
+            margin-bottom:25px;
+        }
+
+        label{
+            font-weight:bold;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin-top:6px;
+            margin-bottom:16px;
+            border-radius:6px;
+            border:1px solid #ccc;
+        }
+
+        .btn{
+            display:block;
+            margin:0 auto;
+            width:80%;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        .login-btn{
+            background:#1f6feb;
+            color:white;
+        }
+
+        .signup-btn{
+            background:#1e8449;
+            color:white;
+        }
+
+        .text{
+            text-align:center;
+            margin-top:20px;
+            margin-bottom:10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>LOGIN</h1>
+
+    <label>Email:</label>
+    <input type="email" id="email" placeholder="Enter your Email">
+
+    <label>Password:</label>
+    <input type="password" id="password" placeholder="Enter your Password">
+
+    <button class="btn login-btn" onclick="loginUser()">Login</button>
+
+
+    <div class="text">Don't have an account?</div>
+
+    <button class="btn signup-btn" onclick="location.href='/register.html'">Register</button>
+
+</div>
+<script>
+
+async function loginUser(){
+
+    let email=document.getElementById("email").value;
+    let password=document.getElementById("password").value;
+
+    let res=await fetch(
+        `http://localhost:8080/auth/login?email=${email}&password=${password}`,
+        { method:"POST" }
+    );
+
+    let msg=await res.text();
+
+    if(msg==="Login Success"){
+        window.location="dashboard.html";
+    }
+    else{
+        alert(msg);
+    }
+}
+
+</script>
+
+</body>
+</html>

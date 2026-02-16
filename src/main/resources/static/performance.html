@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Performance</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+        /* RESET */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:"Segoe UI",sans-serif;
+        }
+
+        /* HEADER FIXED */
+        .header{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:60px;
+            background:#e9e9ea;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 25px;
+            z-index:1000;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-weight:600;
+            font-size:22px;
+            color:#1c2556;
+        }
+
+        .logo-circle{
+            width:40px;
+            height:40px;
+            border:3px solid #1fa3a3;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#1fa3a3;
+            font-weight:bold;
+        }
+
+        .right-icons{
+            display:flex;
+            gap:22px;
+            font-size:18px;
+            color:#444;
+        }
+
+
+        /* SIDEBAR FIXED */
+        .sidebar{
+            position:fixed;
+            top:60px;
+            left:0;
+            width:260px;
+            height:calc(100vh - 60px);
+            background:linear-gradient(#0b1437,#081028);
+            padding:20px 15px;
+            overflow-y:auto;
+        }
+
+        .menu{
+            list-style:none;
+        }
+
+        .menu a{
+            display:flex;
+            align-items:center;
+            gap:15px;
+            padding:14px 18px;
+            color:#cfd6ff;
+            font-size:18px;
+            text-decoration:none;
+            border-radius:12px;
+        }
+
+        .menu a:hover{
+            background:#111c44;
+        }
+
+        .menu a.active{
+            background:linear-gradient(90deg,#5a4bff,#6f63ff);
+            color:white;
+        }
+
+
+        /* CONTENT SCROLL */
+        .content{
+            margin-left:260px;
+            margin-top:60px;
+            height:calc(100vh - 60px);
+            overflow-y:auto;
+            padding:30px;
+            background:#f5f7fb;
+        }
+
+
+        /* SEARCH */
+        .search-box{
+            margin:20px 0;
+            display:flex;
+            gap:10px;
+        }
+
+        .search-box input{
+            flex:1;
+            padding:12px;
+            border-radius:8px;
+            border:1px solid #ccc;
+        }
+
+        .search-box button{
+            padding:12px 20px;
+            border:none;
+            background:#4f46e5;
+            color:white;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+
+        /* FORM */
+        .form-section{
+            background:white;
+            padding:25px;
+            border-radius:14px;
+            margin-top:25px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .form-section h3{
+            margin-bottom:18px;
+        }
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:18px;
+        }
+
+        .form-grid input,
+        .form-grid select{
+            padding:12px;
+            border-radius:8px;
+            border:1px solid #ccc;
+        }
+
+
+        /* BUTTON */
+        .add-btn{
+            margin-top:20px;
+            padding:12px 25px;
+            background:#059669;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+
+        /* TABLE */
+        .table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:15px;
+        }
+
+        .table th{
+            background:#eef2ff;
+            padding:12px;
+            text-align:left;
+        }
+
+        .table td{
+            padding:12px;
+            border-bottom:1px solid #eee;
+        }
+
+        .good{color:green;font-weight:600;}
+        .average{color:#d97706;font-weight:600;}
+        .poor{color:#dc2626;font-weight:600;}
+
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">
+        <div class="logo-circle">N</div>
+        Nyxora Technology
+    </div>
+
+    <div class="right-icons">
+        <i class="fa-regular fa-envelope"></i>
+        <i class="fa-regular fa-bell"></i>
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </div>
+</div>
+
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <ul class="menu">
+
+        <li><a href="/dashboard.html"><i class="fa-solid fa-border-all"></i> Dashboard</a></li>
+        <li><a href="/employees.html"><i class="fa-solid fa-users"></i> Employees</a></li>
+        <li><a href="/attendance.html"><i class="fa-regular fa-calendar"></i> Attendance</a></li>
+        <li><a href="/leaves.html"><i class="fa-regular fa-file-lines"></i> Leaves</a></li>
+        <li><a href="/payroll.html"><i class="fa-solid fa-dollar-sign"></i> Payroll</a></li>
+        <li><a class="active" href="/performance.html"><i class="fa-solid fa-chart-line"></i> Performance</a></li>
+        <li><a href="/departments.html"><i class="fa-solid fa-building"></i> Departments</a></li>
+        <li><a href="/reports.html"><i class="fa-solid fa-chart-bar"></i> Reports</a></li>
+
+    </ul>
+</div>
+
+
+<!-- CONTENT -->
+<div class="content">
+
+<h2>Performance Management</h2>
+<p>Track employee performance</p>
+
+<!-- SEARCH -->
+<div class="search-box">
+<input id="searchId" type="number" placeholder="Search performance by Employee ID">
+<button onclick="searchPerformance()">Search</button>
+</div>
+
+
+<!-- ADD PERFORMANCE -->
+<div class="form-section">
+<h3>Add Performance Record</h3>
+
+<div class="form-grid">
+<input id="empId" type="number" placeholder="Employee ID">
+<input id="empName" type="text" placeholder="Employee Name">
+
+<select id="rating">
+<option value="">Rating</option>
+<option>Excellent</option>
+<option>Good</option>
+<option>Average</option>
+<option>Poor</option>
+</select>
+
+<input id="month" type="month">
+<input id="Reviewer" type="text" placeholder="Reviewer Name">
+</div>
+
+<button class="add-btn" onclick="addPerformance()">Save Record</button>
+</div>
+
+
+
+<!-- TABLE -->
+<div class="form-section">
+<h3>Performance Records</h3>
+
+<table class="table">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Rating</th>
+<th>Reviewer</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="tbody"></tbody>
+</table>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+const BASE="http://localhost:8080";
+
+/* LOAD ALL */
+window.onload=loadAll;
+
+function loadAll(){
+fetch(BASE+"/performance/all")
+.then(res=>res.json())
+.then(data=>render(data));
+}
+
+
+/* ADD */
+function addPerformance(){
+
+const data={
+employeeId:Number(document.getElementById("empId").value),
+name:document.getElementById("empName").value,
+rating:document.getElementById("rating").value,
+date:document.getElementById("month").value,
+reviewer:document.getElementById("Reviewer").value
+};
+
+fetch(BASE+"/performance/add",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(data)
+})
+.then(res=>res.text())
+.then(msg=>{
+alert(msg);
+loadAll();
+});
+}
+
+
+/* SEARCH POPUP */
+function searchPerformance(){
+
+const id=document.getElementById("searchId").value;
+
+if(!id){
+alert("Enter ID");
+return;
+}
+
+fetch(BASE+"/performance/search/"+id)
+.then(res=>res.json())
+.then(data=>{
+
+if(data.length===0){
+alert("No performance record found");
+return;
+}
+
+let msg="Performance Records\n\n";
+
+data.forEach(p=>{
+msg+=
+"Employee ID: "+p.employeeId+
+"\nName: "+p.name+
+"\nRating: "+p.rating+
+"\nDate: "+p.date+
+"\nReviewer: "+p.reviewer+
+"\n\n";
+});
+
+alert(msg);
+
+});
+}
+
+
+/* TABLE */
+function render(list){
+
+let html="";
+
+list.forEach(p=>{
+html+=`
+<tr>
+<td>${p.employeeId}</td>
+<td>${p.name}</td>
+<td>${p.rating}</td>
+<td>${p.reviewer}</td>
+<td>${p.date}</td>
+</tr>
+`;
+});
+
+document.getElementById("tbody").innerHTML=html;
+}
+
+</script>
+
+
+</body>
+</html>

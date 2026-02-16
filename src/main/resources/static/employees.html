@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employees</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+        /* RESET */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:"Segoe UI",sans-serif;
+        }
+
+        /* HEADER FIXED */
+        .header{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:60px;
+            background:#e9e9ea;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 25px;
+            z-index:1000;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-weight:600;
+            font-size:22px;
+            color:#1c2556;
+        }
+
+        .logo-circle{
+            width:40px;
+            height:40px;
+            border:3px solid #1fa3a3;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#1fa3a3;
+            font-weight:bold;
+        }
+
+        .right-icons{
+            display:flex;
+            gap:22px;
+            font-size:18px;
+            color:#444;
+        }
+
+
+        /* SIDEBAR FIXED */
+        .sidebar{
+            position:fixed;
+            top:60px;
+            left:0;
+            width:260px;
+            height:calc(100vh - 60px);
+            background:linear-gradient(#0b1437,#081028);
+            padding:20px 15px;
+            overflow-y:auto;
+        }
+
+        .menu{
+            list-style:none;
+        }
+
+        .menu li{
+            margin-bottom:8px;
+        }
+
+        .menu a{
+            display:flex;
+            align-items:center;
+            gap:15px;
+            padding:14px 18px;
+            color:#cfd6ff;
+            font-size:18px;
+            border-radius:12px;
+            text-decoration:none;
+        }
+
+        .menu a:hover{
+            background:#111c44;
+        }
+
+        .menu a.active{
+            background:linear-gradient(90deg,#5a4bff,#6f63ff);
+            color:white;
+        }
+
+
+        /* CONTENT SCROLL */
+        .content{
+            margin-left:260px;
+            margin-top:60px;
+            height:calc(100vh - 60px);
+            overflow-y:auto;
+            padding:30px;
+            background:#f5f7fb;
+        }
+
+
+        /* SEARCH */
+        .search-box{
+            margin:20px 0;
+            display:flex;
+            gap:10px;
+        }
+
+        .search-box input{
+            flex:1;
+            padding:12px;
+            border-radius:8px;
+            border:1px solid #ccc;
+        }
+
+        .search-box button{
+            padding:12px 20px;
+            border:none;
+            background:#4f46e5;
+            color:white;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+
+        /* FORM SECTION */
+        .form-section{
+            background:white;
+            padding:25px;
+            border-radius:14px;
+            margin-top:25px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .form-section h3{
+            margin-bottom:18px;
+        }
+
+
+        /* GRID */
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:18px;
+        }
+
+        .form-grid input,
+        .form-grid select{
+            padding:12px;
+            border-radius:8px;
+            border:1px solid #ccc;
+        }
+
+
+        /* BUTTONS */
+        .add-btn{
+            margin-top:20px;
+            padding:12px 25px;
+            background:#059669;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+        .delete-btn{
+            margin-top:20px;
+            padding:12px 25px;
+            background:#dc2626;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">
+        <div class="logo-circle">N</div>
+        Nyxora Technology
+    </div>
+
+    <div class="right-icons">
+        <i class="fa-regular fa-envelope"></i>
+        <i class="fa-regular fa-bell"></i>
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </div>
+</div>
+
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <ul class="menu">
+        <li><a href="/dashboard.html"><i class="fa-solid fa-border-all"></i> Dashboard</a></li>
+        <li><a class="active" href="/employees.html"><i class="fa-solid fa-users"></i> Employees</a></li>
+        <li><a href="/attendance.html"><i class="fa-regular fa-calendar"></i> Attendance</a></li>
+        <li><a href="/leaves.html"><i class="fa-regular fa-file-lines"></i> Leaves</a></li>
+        <li><a href="/payroll.html"><i class="fa-solid fa-dollar-sign"></i> Payroll</a></li>
+        <li><a href="/performance.html"><i class="fa-solid fa-chart-line"></i> Performance</a></li>
+        <li><a href="/departments.html"><i class="fa-solid fa-building"></i> Departments</a></li>
+        <li><a href="/reports.html"><i class="fa-solid fa-chart-bar"></i> Reports</a></li>
+    </ul>
+</div>
+
+
+<!-- CONTENT -->
+<div class="content">
+
+    <h2>Employees Management</h2>
+    <p>Manage employee records</p>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Search employee by ID or Name">
+        <button onclick="searchEmployee()">Search</button>
+    </div>
+
+
+    <!-- ADD EMPLOYEE -->
+    <div class="form-section">
+        <h3>Add Employee</h3>
+
+        <div class="form-grid">
+            <input id="empName" type="text" placeholder="Full Name">
+
+            <select id="empDept">
+                <option value="">Select Department</option>
+                <option>HR</option>
+                <option>IT</option>
+                <option>Sales</option>
+                <option>Support</option>
+                <option>Admin</option>
+            </select>
+
+            <input id="joinDate" type="date">
+            <input id="empEmail" type="email" placeholder="Email">
+            <input id="empPhone" type="tel" placeholder="Phone Number">
+            <input id="empRole" type="text" placeholder="Job Title">
+            <input id="empSalary" type="number" placeholder="Salary">
+        </div>
+
+        <button class="add-btn" onclick="addEmployee()">Add Employee</button>
+    </div>
+
+
+
+    <!-- DELETE EMPLOYEE -->
+    <div class="form-section">
+        <h3>Delete Employee</h3>
+
+        <div class="form-grid">
+            <input id="deleteId" type="text" placeholder="id">
+            <input id="deleteName" type="text" placeholder="Employee Name (optional)">
+        </div>
+
+        <button class="delete-btn" onclick="deleteEmployee()">Delete Employee</button>
+    </div>
+
+</div>
+
+<script>
+
+const BASE_URL = window.location.origin;
+
+/* ADD */
+function addEmployee(){
+
+    const data = {
+        name: document.getElementById("empName").value,
+        department: document.getElementById("empDept").value,
+        joiningDate: document.getElementById("joinDate").value,
+        email: document.getElementById("empEmail").value,
+        phone: document.getElementById("empPhone").value,
+        jobTitle: document.getElementById("empRole").value,
+        salary: document.getElementById("empSalary").value
+    };
+
+    fetch(BASE_URL + "/employee/add",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(data)
+    })
+    .then(res=>res.text())
+    .then(msg=>alert(msg))
+    .catch(err=>alert("Error: "+err));
+}
+
+
+/* DELETE */
+function deleteEmployee(){
+
+    const id = document.getElementById("deleteId").value;
+
+    fetch(BASE_URL + "/employee/delete/"+id,{
+        method:"DELETE"
+    })
+    .then(res=>res.text())
+    .then(msg=>alert(msg))
+    .catch(err=>alert("Error: "+err));
+}
+
+
+/* SEARCH (optional API) */
+function searchEmployee(){
+
+    const id = document.getElementById("searchInput").value;
+
+    fetch(BASE_URL + "/employee/search/"+id)
+    .then(res=>res.json())
+    .then(data=>{
+        if(!data){
+            alert("Employee not found");
+            return;
+        }
+
+        alert(
+            "Name: "+data.name+
+            "\nDepartment: "+data.department+
+            "\nSalary: "+data.salary
+        );
+    })
+}
+
+
+</script>
+
+
+</body>
+</html>

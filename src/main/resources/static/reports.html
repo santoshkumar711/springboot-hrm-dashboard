@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reports</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        /* RESET */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:"Segoe UI",sans-serif;
+        }
+
+
+        /* HEADER FIXED */
+        .header{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:60px;
+            background:#e9e9ea;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 25px;
+            z-index:1000;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-weight:600;
+            font-size:22px;
+            color:#1c2556;
+        }
+
+        .logo-circle{
+            width:40px;
+            height:40px;
+            border:3px solid #1fa3a3;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#1fa3a3;
+            font-weight:bold;
+        }
+
+        .right-icons{
+            display:flex;
+            gap:22px;
+            font-size:18px;
+            color:#444;
+        }
+
+
+        /* SIDEBAR FIXED */
+        .sidebar{
+            position:fixed;
+            top:60px;
+            left:0;
+            width:260px;
+            height:calc(100vh - 60px);
+            background:linear-gradient(#0b1437,#081028);
+            padding:20px 15px;
+            overflow-y:auto;
+        }
+
+        .menu{
+            list-style:none;
+        }
+
+        .menu a{
+            display:flex;
+            align-items:center;
+            gap:15px;
+            padding:14px 18px;
+            color:#cfd6ff;
+            font-size:18px;
+            text-decoration:none;
+            border-radius:12px;
+        }
+
+        .menu a:hover{
+            background:#111c44;
+        }
+
+        .menu a.active{
+            background:linear-gradient(90deg,#5a4bff,#6f63ff);
+            color:white;
+        }
+
+
+        /* CONTENT SCROLL */
+        .content{
+            margin-left:260px;
+            margin-top:60px;
+            height:calc(100vh - 60px);
+            overflow-y:auto;
+            padding:30px;
+            background:#f5f7fb;
+        }
+
+
+        /* FILTER */
+        .filter-box{
+            display:flex;
+            gap:15px;
+            margin:20px 0;
+            flex-wrap:wrap;
+        }
+
+        .filter-box select{
+            padding:10px;
+            border-radius:8px;
+            border:1px solid #ccc;
+        }
+
+
+        /* CHARTS */
+        .charts{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:25px;
+        }
+
+        .chart-box{
+            background:white;
+            padding:20px;
+            border-radius:14px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        }
+
+
+        /* TABLE */
+        .table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:25px;
+            background:white;
+            border-radius:14px;
+            overflow:hidden;
+        }
+
+        .table th{
+            background:#eef2ff;
+            padding:12px;
+            text-align:left;
+        }
+
+        .table td{
+            padding:12px;
+            border-bottom:1px solid #eee;
+        }
+
+
+        /* RESPONSIVE */
+        @media(max-width:900px){
+
+            .charts{
+                grid-template-columns:1fr;
+            }
+
+        }
+        canvas{
+        height:300px !important;
+        width: 550px;
+}
+
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">
+        <div class="logo-circle">N</div>
+        Nyxora Technology
+    </div>
+
+    <div class="right-icons">
+        <i class="fa-regular fa-envelope"></i>
+        <i class="fa-regular fa-bell"></i>
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </div>
+</div>
+
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <ul class="menu">
+
+        <li><a href="/dashboard.html"><i class="fa-solid fa-border-all"></i> Dashboard</a></li>
+        <li><a href="/employees.html"><i class="fa-solid fa-users"></i> Employees</a></li>
+        <li><a href="/attendance.html"><i class="fa-regular fa-calendar"></i> Attendance</a></li>
+        <li><a href="/leaves.html"><i class="fa-regular fa-file-lines"></i> Leaves</a></li>
+        <li><a href="/payroll.html"><i class="fa-solid fa-dollar-sign"></i> Payroll</a></li>
+        <li><a href="/performance.html"><i class="fa-solid fa-chart-line"></i> Performance</a></li>
+        <li><a href="/departments.html"><i class="fa-solid fa-building"></i> Departments</a></li>
+        <li><a class="active" href="/reports.html"><i class="fa-solid fa-chart-bar"></i> Reports</a></li>
+
+    </ul>
+</div>
+
+
+<!-- CONTENT -->
+<div class="content">
+
+<h2>Reports Dashboard</h2>
+<p>Analytics & company reports</p>
+
+<!-- FILTER -->
+<div class="filter-box">
+
+<select id="month">
+<option value="">All Months</option>
+<option value="1">Jan</option>
+<option value="2">Feb</option>
+<option value="3">Mar</option>
+<option value="4">Apr</option>
+<option value="5">May</option>
+<option value="6">Jun</option>
+<option value="7">Jul</option>
+<option value="8">Aug</option>
+<option value="9">Sep</option>
+<option value="10">Oct</option>
+<option value="11">Nov</option>
+<option value="12">Dec</option>
+</select>
+
+<select id="year">
+<option value="">All Years</option>
+<option>2015</option>
+<option>2016</option>
+<option>2017</option>
+<option>2018</option>
+<option>2019</option>
+<option>2020</option>
+<option>2021</option>
+<option>2022</option>
+<option>2023</option>
+<option>2024</option>
+<option>2025</option>
+<option>2026</option>
+</select>
+
+<select id="dept">
+<option value="">All Departments</option>
+<option>IT</option>
+<option>HR</option>
+<option>Sales</option>
+<option>Support</option>
+</select>
+
+<button onclick="applyFilters()">Apply</button>
+
+</div>
+
+
+
+<!-- CHARTS -->
+<div class="charts">
+
+<div class="chart-box">
+<h3>Attendance Overview</h3>
+<canvas id="chart1"></canvas>
+</div>
+
+<div class="chart-box">
+<h3>Salary Distribution</h3>
+<canvas id="chart2"></canvas>
+</div>
+
+<div class="chart-box">
+<h3>Department Employees</h3>
+<canvas id="chart3"></canvas>
+</div>
+
+<div class="chart-box">
+<h3>Performance Rating</h3>
+<canvas id="chart4"></canvas>
+</div>
+
+</div>
+
+
+<script>
+const BASE="http://localhost:8080";
+
+let charts=[];
+
+/* AUTO LOAD CURRENT MONTH YEAR */
+window.onload=init;
+
+function init(){
+
+const now=new Date();
+const m=now.getMonth()+1;
+const y=now.getFullYear();
+
+document.getElementById("month").value=m;
+document.getElementById("year").value=y;
+
+loadCharts(m,y,"");
+}
+
+
+/* APPLY FILTER BUTTON */
+function applyFilters(){
+
+const m=document.getElementById("month").value;
+const y=document.getElementById("year").value;
+const d=document.getElementById("dept").value;
+
+loadCharts(m,y,d);
+
+}
+
+
+/* API CALL */
+function loadCharts(m,y,d){
+
+fetch(BASE+`/reports/filter?month=${m}&year=${y}&dept=${d}`)
+.then(res=>res.json())
+.then(data=>renderCharts(data))
+.catch(()=>alert("Failed to load reports"));
+
+}
+
+
+/* RENDER ALL CHARTS */
+function renderCharts(data){
+
+charts.forEach(c=>c.destroy());
+charts=[];
+
+
+/* ATTENDANCE PIE */
+charts.push(new Chart(document.getElementById("chart1"),{
+type:"pie",
+data:{
+labels:["Present","Absent","Leave"],
+datasets:[{
+data:[
+data.present||0,
+data.absent||0,
+data.leave||0
+]
+}]
+},
+options:{responsive:true,maintainAspectRatio:false}
+}));
+
+
+/* SALARY BAR */
+charts.push(new Chart(document.getElementById("chart2"),{
+type:"bar",
+data:{
+labels:data.salaryLabels||[],
+datasets:[{
+label:"Salary",
+data:data.salaryData||[]
+}]
+},
+options:{responsive:true,maintainAspectRatio:false}
+}));
+
+
+/* DEPARTMENT DOUGHNUT */
+charts.push(new Chart(document.getElementById("chart3"),{
+type:"doughnut",
+data:{
+labels:data.deptLabels||[],
+datasets:[{
+data:data.deptCounts||[]
+}]
+},
+options:{responsive:true,maintainAspectRatio:false}
+}));
+
+
+/* PERFORMANCE POLAR */
+charts.push(new Chart(document.getElementById("chart4"),{
+type:"polarArea",
+data:{
+labels:["Excellent","Good","Average","Poor"],
+datasets:[{
+data:[
+data.excellent||0,
+data.good||0,
+data.average||0,
+data.poor||0
+]
+}]
+},
+options:{responsive:true,maintainAspectRatio:false}
+}));
+
+}
+</script>
+
+
+</body>
+</html>
