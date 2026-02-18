@@ -97,8 +97,8 @@ async function loginUser(){
     let email=document.getElementById("email").value;
     let password=document.getElementById("password").value;
 
-    let res=await fetch(
-        `http://localhost:8080/auth/login?email=${email}&password=${password}`,
+    let res = await fetch(
+    `${window.location.origin}/auth/login?email=${email}&password=${password}`,
         { method:"POST" }
     );
 

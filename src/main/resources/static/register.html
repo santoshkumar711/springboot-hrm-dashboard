@@ -116,7 +116,9 @@ async function registerUser(){
         password:password
     };
 
-    let res=await fetch("http://localhost:8080/auth/register",{
+    let res = await fetch(
+    window.location.origin + "/auth/register",
+{
         method:"POST",
         headers:{ "Content-Type":"application/json"},
         body:JSON.stringify(user)
