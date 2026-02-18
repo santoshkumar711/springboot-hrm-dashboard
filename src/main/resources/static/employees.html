@@ -278,7 +278,7 @@
 
 <script>
 
-const BASE_URL = window.location.origin;
+const BASE = window.location.origin;
 
 /* ADD */
 function addEmployee(){
@@ -293,7 +293,7 @@ function addEmployee(){
         salary: document.getElementById("empSalary").value
     };
 
-    fetch(BASE_URL + "/employee/add",{
+    fetch(BASE + "/employee/add",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(data)
@@ -309,7 +309,7 @@ function deleteEmployee(){
 
     const id = document.getElementById("deleteId").value;
 
-    fetch(BASE_URL + "/employee/delete/"+id,{
+    fetch(BASE + "/employee/delete/"+id,{
         method:"DELETE"
     })
     .then(res=>res.text())
@@ -323,7 +323,7 @@ function searchEmployee(){
 
     const id = document.getElementById("searchInput").value;
 
-    fetch(BASE_URL + "/employee/search/"+id)
+    fetch(BASE + "/employee/search/"+id)
     .then(res=>res.json())
     .then(data=>{
         if(!data){
